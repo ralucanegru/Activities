@@ -1,25 +1,24 @@
-﻿using API.Services;
+﻿using Application.Activities;
+using Domain.Enitities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivityController : ControllerBase
+    public class ActivityController : BaseApiController
     {
-        private readonly IActivityService activityService;
-
-        public ActivityController(IActivityService activityService)
-        {
-            this.activityService = activityService;
-        }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            var activities = await activityService.List();
+            return await Mediator.Send(new List.Query());
+        }
 
-            return Ok(activities);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Activity>> GetActivity(Guid id)
+        {
+            return await Mediator.Send(new Details.Query { Id = id });
         }
     }
 }

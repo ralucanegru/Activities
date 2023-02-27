@@ -1,7 +1,7 @@
 ﻿using Domain.Enitities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.Data
+namespace Persistence.Data
 {
     public class DataContext : DbContext
     {
